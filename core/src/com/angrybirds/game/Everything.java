@@ -1,6 +1,7 @@
 package com.angrybirds.game;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Everything {
@@ -74,4 +75,9 @@ public abstract class Everything {
         else
             return "-1";
     }
+
+    public void applyPhysics(float gravity) {
+        
+    }
+
 }
