@@ -23,7 +23,9 @@ public class game extends ApplicationAdapter {
 		img = new Texture("BB.png");
 		test = new Sprite(img);
 		levelObjects = new Everything[1];
-		levelObjects[0] = new Bird(new Vector2(0,0));
+		levelObjects[0] = new Bird(new Vector2(0,50));
+		levelObjects[0].setVelocity(new Vector2(10 , 10));
+
 	}
 
 	@Override
@@ -33,12 +35,9 @@ public class game extends ApplicationAdapter {
 		//Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(test,test.getX()*5,test.getY()*5 , levelObjects[0].width , levelObjects[0].height);
-		renderPoint.x = test.getX() +1;
-		renderPoint.y = test.getY() +1;
-		levelObjects[0].applyPhysics(Gravity ,20, (float)0.707 , (float)0.707 );
+		batch.draw(test,test.getX(),test.getY() , levelObjects[0].width , levelObjects[0].height);
 
-
+		levelObjects[0].applyPhysics(Gravity);
 
 		batch.end();
 	}

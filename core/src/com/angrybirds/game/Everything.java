@@ -76,9 +76,9 @@ public abstract class Everything {
             return "-1";
     }
 
-    public void applyPhysics(float gravity , float V0 , float sinC , float cosC) {
-        this.Velocity.x = V0 *  cosC;
-        this.Velocity.y = V0 * sinC - gravity/60;
+    public void applyPhysics(float gravity ) {
+
+        this.Velocity.y -= gravity/60; //(V0 * sinC - gravity)
         this.midPoint.x += this.Velocity.x;
         this.midPoint.y += this.Velocity.y;
     }

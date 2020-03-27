@@ -11,6 +11,7 @@ public class Bird extends Everything {
         width = 50 ;
         weight = 10;
         this.midPoint = midPoint ;
+        this.Velocity = new Vector2(0,0);
     }
     public int getCondition() {
         if (health > 50)
