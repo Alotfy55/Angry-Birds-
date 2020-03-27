@@ -36,7 +36,8 @@ public class game extends ApplicationAdapter {
 		batch.draw(test,test.getX()*5,test.getY()*5 , levelObjects[0].width , levelObjects[0].height);
 		renderPoint.x = test.getX() +1;
 		renderPoint.y = test.getY() +1;
-		levelObjects[0].setMidPoint(renderPoint);
+		levelObjects[0].applyPhysics(Gravity ,20, (float)0.707 , (float)0.707 );
+
 
 
 		batch.end();
