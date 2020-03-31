@@ -41,7 +41,7 @@ public class game extends ApplicationAdapter {
 		hold = false;
 		pausePhysics = true;
 		test.setPosition(levelObjects[0].x,levelObjects[0].y);
-		test1.setPosition(0,-100);
+		test1.setPosition(0,-130);
 
 	}
 
@@ -88,7 +88,7 @@ public class game extends ApplicationAdapter {
 
 				hold = false ;
 
-				levelObjects[0].setVelocity(new Vector2(Math.abs(test.getX() - levelObjects[0].x) /10, ( levelObjects[0].y - test.getY())/10));
+				levelObjects[0].setVelocity(new Vector2(-(test.getX() - levelObjects[0].x) /10, ( levelObjects[0].y - test.getY())/8));
 
 				levelObjects[0].setCenter(test.getX() , test.getY());
 
