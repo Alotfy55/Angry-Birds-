@@ -10,12 +10,13 @@ public class Bird extends Everything {
     public Bird(Vector2 midPoint) {
         imgPath = new String[2];
         health = 100 ;
-        height = 50 ;
-        width = 50 ;
+        height = 40 ;
+        width = 40 ;
         weight = 10;
         this.x = midPoint.x ;
         this.y = midPoint.y;
         this.Velocity = new Vector2(0,0);
+        this.BounceValue = 0.69f;
     }
     public int getCondition() {
         if (health > 50)

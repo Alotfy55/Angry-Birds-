@@ -13,7 +13,7 @@ public abstract class Everything extends Rectangle{
     protected int health ;
     protected int condition;
     protected final int groundLevel = 20;
-    protected final float BounceValue = 0.69f ;
+    protected float BounceValue = 0.69f ;
 
 
     public Vector2 getMidPoint() {
@@ -88,8 +88,19 @@ public abstract class Everything extends Rectangle{
         }
         return false;
     }
-    public void OnCollision(Vector2 V , float y , float x)
+    public void OnCollision(Everything collidedObject)
     {
+    	float factorx = 3 ;
+    	float factory = 5 ;
+    	//double totalEnergy =
+		//		this.weight*Math.sqrt(Math.pow(this.Velocity.x,2) + Math.pow(this.Velocity.y,2)) +
+		//		collidedObject.weight* Math.sqrt(Math.pow(collidedObject.Velocity.x,2) + Math.pow(collidedObject.Velocity.y,2));
+
+    	//float factorx = ( (this.weight*this.Velocity.x) - (collidedObject.Velocity.x * collidedObject.weight)) / (this.weight * collidedObject.weight);
+		//float factory = ( (this.weight*this.Velocity.y) - (collidedObject.Velocity.y * collidedObject.weight)) / (this.weight * collidedObject.weight);
+
+		collidedObject.setVelocity(new Vector2(this.Velocity.x - this.Velocity.x /factorx , this.Velocity.y - this.Velocity.y/factory));
+		this.setVelocity(new Vector2(this.Velocity.x/factorx , -this.Velocity.y/factory));
 
     }
 }

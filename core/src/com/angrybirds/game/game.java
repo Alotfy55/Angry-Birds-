@@ -16,21 +16,39 @@ import com.badlogic.gdx.physics.box2d.World;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.security.Key;
+import java.util.Random;
 
 public class game extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img ;
+	Texture Birds;
 	Texture background ;
+	Sprite test2;
 	Sprite test;
 	Sprite test1;
-	public final float Gravity =9.8f;
+	final float Gravity =9.8f;
 	Everything[] levelObjects;
 	boolean hold; // to determine if mouse button is held down
 	boolean pausePhysics; // to start physics when the mouse button is released
+	int NumOfObjects;
+	boolean [][] collided;
+	int frameCounter = 0;
+
 	
 	public void inCollision(Everything[] levelObjects)
 	{
-		
+		for (int i = 0 ; i < NumOfObjects ; i++)
+		{
+			for (int j = i+1 ; j < NumOfObjects ; j++)
+			{
+				if (levelObjects[i].overlaps(levelObjects[j]) && !collided[i][j])
+				{
+					levelObjects[i].OnCollision(levelObjects[j]);
+					collided[i][j] = true;
+					System.out.println("collision here");
+				}
+			}
+		}
 	}
 	
 	
@@ -39,16 +57,33 @@ public class game extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		img = new Texture("BB.png");
 		background = new Texture("background.png");
+		Birds = new Texture("RED.png");
+		test2 = new Sprite(Birds);
 		test = new Sprite(img);
 		test1 = new Sprite(background);
-		levelObjects = new Everything[2];
+		NumOfObjects = 10;
+		levelObjects = new Everything[NumOfObjects];
 		levelObjects[0] = new Bird(new Vector2(150,200));
-		levelObjects[1] = new Bird(new Vector2(10,60));
+		int h = 30;
+
+		for (int i = 1 ; i < NumOfObjects ; i++)
+		{
+			h+=70;
+			levelObjects[i] = new Bird(new Vector2(500 , h));
+			double velx = Math.random()*10;
+			levelObjects[i].Velocity.x = (float) velx;
+		}
+
 		hold = false;
 		pausePhysics = true;
 		test.setPosition(levelObjects[0].x,levelObjects[0].y);
 		test1.setPosition(0,-130);
 
+		collided = new boolean[NumOfObjects][NumOfObjects];
+		for ( int i = 0 ; i < NumOfObjects ; i++)
+		{
+			collided[i] = new boolean[NumOfObjects];
+		}
 	}
 
 	@Override
@@ -63,18 +98,24 @@ public class game extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(test1,test1.getX(),test1.getY() ,1280 , 400 ); // draw background
 
-		batch.draw(test,test.getX(),test.getY() , levelObjects[0].width , levelObjects[0].height); // draw first bird
+		batch.draw(test2,test.getX(),test.getY() , levelObjects[0].width , levelObjects[0].height); // draw first bird
+
+		for ( int i = 1 ; i < NumOfObjects ; i++)
+		{
+			batch.draw(test,levelObjects[i].getX(),levelObjects[i].getY() , levelObjects[i].width , levelObjects[i].height); // draw other birds
+			if (!pausePhysics)
+			levelObjects[i].applyPhysics(Gravity);
+		}
+
 		//batch.draw(test1,test1.getX(),test1.getY() , 0,0); // draw second bird
 
 		if (!pausePhysics) // apply bird physics
 		{
 			test.setPosition(renderPoint.x, renderPoint.y);
 			levelObjects[0].applyPhysics(Gravity);
-		}
 
-		if(levelObjects[0].overlaps(levelObjects[1])) {  // tests for collision
-			levelObjects[1].setVelocity(new Vector2(50,60));
 		}
+			inCollision(levelObjects);
 		batch.end();
 
 
@@ -101,6 +142,18 @@ public class game extends ApplicationAdapter {
 				pausePhysics = false;
 
 			}
+		}
+
+		if (frameCounter%20 == 0)
+		{
+			for(int i = 0 ; i < NumOfObjects ; i++)
+			{
+				for (int j = 0 ; j < NumOfObjects ; j++)
+				{
+					collided[i][j]=false;
+				}
+			}
+			frameCounter++;
 		}
 	}
 	
