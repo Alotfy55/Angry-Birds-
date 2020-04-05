@@ -27,7 +27,13 @@ public class game extends ApplicationAdapter {
 	Everything[] levelObjects;
 	boolean hold; // to determine if mouse button is held down
 	boolean pausePhysics; // to start physics when the mouse button is released
-
+	
+	public void inCollision(Everything[] levelObjects)
+	{
+		
+	}
+	
+	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -82,7 +88,7 @@ public class game extends ApplicationAdapter {
 		}
 
 		if (hold){
-			test.setPosition(Gdx.input.getX() -25,
+			test.setPosition(Gdx.input.getX() - 25,
 					Gdx.graphics.getHeight() - Gdx.input.getY() -25);
 			if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
 
