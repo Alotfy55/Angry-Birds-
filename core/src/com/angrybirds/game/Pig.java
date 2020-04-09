@@ -1,5 +1,5 @@
 package com.angrybirds.game;
-
+/**
 public class Pig extends Everything{
 	public Pig() {
 		imgPath = new String[2];
@@ -15,3 +15,4 @@ public class Pig extends Everything{
 	}
 
 }
+*/

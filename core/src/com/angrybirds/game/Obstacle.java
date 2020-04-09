@@ -1,5 +1,6 @@
 package com.angrybirds.game;
 
+/**
 public class Obstacle extends Everything{
 	public Obstacle() {
 		imgPath = new String[2];
@@ -14,3 +15,4 @@ public class Obstacle extends Everything{
 		else return 1;
 	}
 }
+*/
