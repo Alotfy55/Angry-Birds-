@@ -1,5 +1,6 @@
 package com.angrybirds.game;
 
+import static com.angrybirds.game.Constants.PPM;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -34,13 +35,15 @@ public class game extends ApplicationAdapter {
 
 
 		int NumOfObjects;
-		Everything player, player1[], bedRock;
+		Everything player, player1[] ,bedRock;
 
 		boolean pausePhysics;
 		boolean hold;
-		public static final float PPM = 32;
+
 		public Vector2 mouseOrigin;
-		final int MouseLimit = 50;
+		final int MouseLimit = 150;
+
+
 		@Override
 		public void create() {
 				Box2D.init();
@@ -53,7 +56,7 @@ public class game extends ApplicationAdapter {
 
 				NumOfObjects = 10;
 				batch = new SpriteBatch();
-				img = new Texture("BB.png");
+				img = new Texture("Pig.png");
 				background = new Texture("background.png");
 				Birds = new Texture("RED.png");
 				test2 = new Sprite(Birds);
@@ -61,13 +64,13 @@ public class game extends ApplicationAdapter {
 				test1 = new Sprite(background);
 
 
-				player1 = new Bird[NumOfObjects];
+				player1 = new Pig[NumOfObjects];
 				player = new Bird(world, 150, 300, 20, 20, false);
 
 				for (int i = 0; i < NumOfObjects; i++) {
-						player1[i] = new Bird(world, 700 + i * 10, 200 + i * 50, 20, 20, false);
+						player1[i] = new Pig(world, 700 + i * 10, 200 + i * 50, 20, 20, false);
 				}
-				bedRock = new Bird(world, Gdx.graphics.getWidth() / 2, 90, 1000, 10, true);
+				bedRock = new Obstacle( world ,Gdx.graphics.getWidth() / 2, 90, 1000, 10, true);
 		}
 
 		@Override
@@ -87,7 +90,7 @@ public class game extends ApplicationAdapter {
 						batch.draw(test, player1[i].body.getPosition().x * PPM, player1[i].body.getPosition().y * PPM, 50, 50); // draw other birds
 				}
 
-				if ( Gdx.input.getPressure() == 1 && pausePhysics)
+				if ( Gdx.input.getPressure() == 1 && pausePhysics && includes((Bird) player , new Vector2(Gdx.input.getX(),Gdx.graphics.getHeight() - Gdx.input.getY() )))
 				{
 						hold =true;
 						if (mouseOrigin == null)
@@ -107,13 +110,12 @@ public class game extends ApplicationAdapter {
 				batch.draw(test2, player.body.getPosition().x * PPM, player.body.getPosition().y * PPM ,50 , 50 ); //player.getPosition().x*PPM, player.getPosition().y*PPM
 				batch.end();
 
-				System.out.println(test2.getY()+ " " + (Gdx.graphics.getHeight() - Gdx.input.getY()) +" "+ player.body.getPosition().x*PPM +" "+ Gdx.input.getX() );
 
 
-
-
-				dDebugRenderer.render(world, camera.combined.scl(PPM));
+				// remove before production
+				//dDebugRenderer.render(world, camera.combined.scl(PPM));
 				camera.combined.scl(1 / PPM);
+				moveCamera();
 		}
 
 		@Override
@@ -144,6 +146,15 @@ public class game extends ApplicationAdapter {
 	}
 */
 
+public void moveCamera()
+{
+		Vector3 position = camera.position;
+		position.x = player.body.getPosition().x / PPM +500;
+		camera.position.set(position);
+
+		camera.update();
+
+}
 public void getMouseInput()
 {
 
@@ -156,7 +167,7 @@ public void getMouseInput()
 				player.body.setTransform(test2.getX()/32 , test2.getY()/32,0);
 				hold=false;
 				pausePhysics = false;
-				player.body.setLinearVelocity( ((mouseOrigin.x - Gdx.input.getX()) /5 ) , (mouseOrigin.y - (Gdx.graphics.getHeight() - Gdx.input.getY()))/5);
+				player.body.setLinearVelocity( ((mouseOrigin.x - Gdx.input.getX()) /10 ) , (mouseOrigin.y - (Gdx.graphics.getHeight() - Gdx.input.getY()))/10);
 
 		}
 }
