@@ -18,6 +18,8 @@ public class Obstacle extends Everything{
 
 			this.width = width ;
 
+			this.angle = 0;
+
 	}
 	public int getCondition() {
 		if (health > 50)
@@ -35,7 +37,9 @@ public class Obstacle extends Everything{
 				else
 						def.type = BodyDef.BodyType.DynamicBody;
 				def.position.set(x/PPM,y/PPM);
-				def.fixedRotation = true ;
+				def.fixedRotation = false ;
+				def.angularDamping = 15f;
+
 
 
 				pBody = world.createBody(def);
@@ -45,8 +49,8 @@ public class Obstacle extends Everything{
 
 				fixtureDef.shape = shape ;
 				fixtureDef.restitution = 0.5f;
-				fixtureDef.friction = 0.1f ;
-				fixtureDef.density = 0f;
+				fixtureDef.friction = 1.1f ;
+				fixtureDef.density = 1f;
 
 
 

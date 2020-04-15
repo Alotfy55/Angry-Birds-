@@ -10,11 +10,12 @@ import com.badlogic.gdx.physics.box2d.*;
 import static com.angrybirds.game.Constants.PPM;
 
 public abstract class Everything  {
-		protected String[] imgPath ;
+	protected String[] imgPath ;
 	protected int health ;
 	protected int condition;
 	int height;
 	int width;
+	float angle;
 	protected Body body;
 
 		protected abstract Body create(int x , int y , int width , int height , boolean isStatic, World world ) ;

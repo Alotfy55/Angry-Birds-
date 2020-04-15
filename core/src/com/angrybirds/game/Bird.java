@@ -31,7 +31,7 @@ public class Bird extends Everything {
 				def.position.set(x/PPM,y/PPM);
 				def.fixedRotation = false ;
 				
-				def.angularDamping = 1f;
+				def.angularDamping = 3f;
 
 
 				pBody = world.createBody(def);

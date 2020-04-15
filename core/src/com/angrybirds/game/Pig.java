@@ -16,6 +16,8 @@ public class Pig extends Everything{
 				this.height = height ;
 
 				this.width = width ;
+
+				this.angle = 0;
 		}
 		@Override
 		protected Body create(int x, int y, int width, int height, boolean isStatic, World world) {
@@ -27,7 +29,7 @@ public class Pig extends Everything{
 						def.type = BodyDef.BodyType.DynamicBody;
 				def.position.set(x/PPM,y/PPM);
 				def.fixedRotation = false ;
-				def.angularDamping = 2f;
+				def.angularDamping = 4f;
 
 
 				pBody = world.createBody(def);
@@ -38,7 +40,7 @@ public class Pig extends Everything{
 
 				fixtureDef.shape = shape ;
 				fixtureDef.friction = 1f;
-				fixtureDef.density= 1f;
+				fixtureDef.density= 0.2f;
 
 
 
