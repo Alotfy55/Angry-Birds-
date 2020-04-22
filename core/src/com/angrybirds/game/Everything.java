@@ -2,6 +2,8 @@ package com.angrybirds.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
@@ -16,7 +18,9 @@ public abstract class Everything  {
 	int height;
 	int width;
 	protected Body body;
+	protected Sprite sprite;
 
+<<<<<<< Updated upstream
 
 
 		public Everything(World world, int x , int y , int width , int height , boolean isStatic) {
@@ -53,5 +57,27 @@ public abstract class Everything  {
 				shape.dispose();
 				return pBody;
 		}
+=======
+	public Everything(World world, int x , int y , int width , int height , boolean isStatic , Sprite sprite){
+		health = 100 ;
+>>>>>>> Stashed changes
 
+		this.height = height ;
+
+		this.width = width ;
+
+		this.sprite = sprite ;
+	}
+	protected abstract Body create(int x , int y , int width , int height , boolean isStatic, World world );
+
+	public void render(SpriteBatch batch) {
+		// First we position and rotate the sprite correctly
+		int posX = (int)((int)body.getPosition().x*PPM) - (int) sprite.getWidth()/2;
+		int posY = (int)((int)body.getPosition().y*PPM) - (int)sprite.getHeight()/2 ;
+		float rotation = (float) Math.toDegrees(body.getAngle());
+		sprite.setPosition(posX, posY);
+		//sprite.setRotation(rotation);
+		// Then we simply draw it as a normal sprite.
+		sprite.draw(batch);
+	}
 }
