@@ -1,31 +1,12 @@
 package com.angrybirds.game;
-<<<<<<< Updated upstream
-/**
-=======
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
 
-import static com.angrybirds.game.Constants.PPM;
+import static com.angrybirds.game.game.PPM;
 
->>>>>>> Stashed changes
+
 public class Pig extends Everything{
-	public Pig() {
-		imgPath = new String[2];
-		health = 100 ;
-		height = 50 ;
-		width = 50 ;
-		weight = 10;
-	}
-	public int getCondition() {
-		if (health > 50)
-			return 0 ;
-		else return 1;
-	}
-
-<<<<<<< Updated upstream
-=======
-
 		public Pig(World world, int x , int y , int width , int height , boolean isStatic , Sprite sprite)
 		{
 			super(world, x, y, width, height, isStatic , sprite);
@@ -60,6 +41,4 @@ public class Pig extends Everything{
 				shape.dispose();
 				return pBody;
 		}
->>>>>>> Stashed changes
 }
-*/

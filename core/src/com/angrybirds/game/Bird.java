@@ -1,25 +1,13 @@
 package com.angrybirds.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
+
+import static com.angrybirds.game.game.PPM;
 
 public class Bird extends Everything {
 
-<<<<<<< Updated upstream
-    public Bird(World world, int x , int y , int width , int height , boolean isStatic) {
-		super( world,  x ,  y ,  width ,  height ,  isStatic);
-    }
-    public int getCondition() {
-        if (health > 50)
-            return 0 ;
-        else return 1;
-    }
-=======
+
 		public Bird(World world, int x , int y , int width , int height , boolean isStatic , Sprite sprite) {
 			super(world,x,y,width,height,isStatic ,sprite);
 
@@ -63,5 +51,4 @@ public class Bird extends Everything {
 						return 0 ;
 				else return 1;
 		}
->>>>>>> Stashed changes
 }

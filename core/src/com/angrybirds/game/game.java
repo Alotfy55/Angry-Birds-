@@ -23,17 +23,15 @@ public class game extends ApplicationAdapter {
 		Texture img;
 		Texture Birds;
 		Texture background;
+		Texture Wood_texture;
 
 		Sprite test2;
 		Sprite test;
 		Sprite test1;
-<<<<<<< Updated upstream
 
-=======
 		Sprite Wood1Sprite;
 		Sprite Wood2Sprite;
 		Sprite sprite;
->>>>>>> Stashed changes
 
 		public World world;
 		Box2DDebugRenderer dDebugRenderer;
@@ -41,11 +39,7 @@ public class game extends ApplicationAdapter {
 
 
 		int NumOfObjects;
-<<<<<<< Updated upstream
-		Everything player, player1[], bedRock;
-=======
 		Everything player, levelObjects[], enemies[] ,bedRock;
->>>>>>> Stashed changes
 
 		boolean pausePhysics;
 		boolean hold;
@@ -64,58 +58,35 @@ public class game extends ApplicationAdapter {
 
 				NumOfObjects = 10;
 				batch = new SpriteBatch();
-<<<<<<< Updated upstream
-				img = new Texture("BB.png");
-=======
 				batch.setProjectionMatrix(camera.combined);
 				img = new Texture("Pig.png");
->>>>>>> Stashed changes
+				Wood_texture = new Texture("Wood1.png");
 				background = new Texture("background.png");
 				Birds = new Texture("RED.png");
 				test2 = new Sprite(Birds);
 				test = new Sprite(img);
 				test1 = new Sprite(background);
-<<<<<<< Updated upstream
-=======
+
 				Wood1Sprite= new Sprite(Wood_texture);
-				Wood2Sprite = new Sprite(Wood2_texture);
 				test2.setSize(50,50);
 				Wood1Sprite.setSize(10/PPM , 30/PPM);
 				test2.setSize(10/PPM , 10/PPM);
 
->>>>>>> Stashed changes
-
 				player = new Bird(world, 50, 300, 10, 10, false , test2);
 				player.body.setUserData(test2);
-				enemies = new Pig[3];
-
-<<<<<<< Updated upstream
-				player1 = new Bird[NumOfObjects];
-				player = new Bird(world, 150, 300, 20, 20, false);
-
-				for (int i = 0; i < NumOfObjects; i++) {
-						player1[i] = new Bird(world, 700 + i * 10, 200 + i * 50, 20, 20, false);
-				}
-				bedRock = new Bird(world, Gdx.graphics.getWidth() / 2, 90, 1000, 10, true);
-=======
-
-
+				enemies = new Pig[5];
 				levelObjects = new Obstacle[NumOfObjects];
 
 				for ( int i = 0 ; i < NumOfObjects ; i++){
 					levelObjects[i] = new Obstacle(world,190 , 75+ i*40,  5,20 , false , Wood1Sprite);
 				}
 
-				for (int i = 0 ; i < 3 ; i++)
-				{
+				for (int i = 0 ; i < 5 ; i++) {
 					enemies[i] = new Pig(world,250 , 75+ i*40,  10,10 , false , Wood1Sprite);
 				}
-				//for (int i = 0; i < NumOfObjects; i++) {
-				//		player1[i] = new Pig(world, 700 + i + 10, 200 + i + 50, 20, 20, false);
-				//}
+
 
 				bedRock = new Obstacle( world ,Gdx.graphics.getWidth() / 2, 55, 1000, 1, true , test1);
->>>>>>> Stashed changes
 		}
 
 		@Override
@@ -129,19 +100,10 @@ public class game extends ApplicationAdapter {
 				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 				batch.begin();
-
 				batch.draw(test1, 0, 0, 30, 5);
 
-				for (int i = 0; i < NumOfObjects; i++) {
-						batch.draw(test, player1[i].body.getPosition().x * PPM, player1[i].body.getPosition().y * PPM, 50, 50); // draw other birds
-				}
-
-<<<<<<< Updated upstream
-				if ( Gdx.input.getPressure() == 1 && pausePhysics)
-=======
 
 				if ( Gdx.input.getPressure() == 1 && pausePhysics && includes((Bird) player , new Vector2(Gdx.input.getX()/2,(Gdx.graphics.getHeight() - Gdx.input.getY()) /2 )))
->>>>>>> Stashed changes
 				{
 					//System.out.println("sfgnskjdfnas");
 					hold =true;
@@ -164,7 +126,7 @@ public class game extends ApplicationAdapter {
 				Wood1Sprite.setRotation(MathUtils.radiansToDegrees * levelObjects[i].body.getAngle());
 				Wood1Sprite.draw(batch);
 			}
-			for ( int i = 0 ; i < 3 ; i++) {
+			for ( int i = 0 ; i < 5 ; i++) {
 				test.setBounds(enemies[i].body.getPosition().x - test.getWidth()/(2) , enemies[i].body.getPosition().y - test.getHeight()/(2) , 2*(enemies[i].width/PPM),2*(enemies[i].height/PPM));
 				test.setOrigin(test.getWidth()/2 , test.getHeight()/2);
 				test.setRotation(MathUtils.radiansToDegrees * enemies[i].body.getAngle());
@@ -214,9 +176,8 @@ public class game extends ApplicationAdapter {
 */
 
 			batch.end();
-			//dDebugRenderer.render(world,camera.combined);
+			dDebugRenderer.render(world,camera.combined);
 			//System.out.println(Gdx.input.getX()/PPM + " " + (Gdx.graphics.getHeight() - Gdx.input.getY())/PPM + " " + player.body.getPosition().x +" " +  player.body.getPosition().y);
->>>>>>> Stashed changes
 		}
 
 	@Override
@@ -247,21 +208,6 @@ public class game extends ApplicationAdapter {
 
 	}
 
-<<<<<<< Updated upstream
-public void getMouseInput()
-{
-
-		if (includes((Bird) player , new Vector2(Gdx.input.getX(),Gdx.graphics.getHeight() - Gdx.input.getY() )) && Gdx.input.isButtonPressed(Input.Buttons.LEFT)  )
-		{
-				player.body.setTransform((float) Gdx.input.getX()/32 ,(float) (Gdx.graphics.getHeight()- Gdx.input.getY())/32,0);
-		}
-		if(Gdx.input.getPressure() == 0)
-		{
-				player.body.setTransform(test2.getX()/32 , test2.getY()/32,0);
-				hold=false;
-				pausePhysics = false;
-				player.body.setLinearVelocity( ((mouseOrigin.x - Gdx.input.getX()) /5 ) , (mouseOrigin.y - (Gdx.graphics.getHeight() - Gdx.input.getY()))/5);
-=======
 
 	public void moveCamera() {
 			Vector3 position = camera.position;
@@ -285,8 +231,6 @@ public void getMouseInput()
 					hold=false;
 					pausePhysics = false;
 					player.body.setLinearVelocity( ((mouseOrigin.x - Gdx.input.getX()) /8 ) , (mouseOrigin.y - (Gdx.graphics.getHeight() - Gdx.input.getY()))/4);
->>>>>>> Stashed changes
-
 			}
 	}
 
