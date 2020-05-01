@@ -41,6 +41,7 @@ public class Bird extends Everything {
 
 
 				pBody.createFixture(fixtureDef);
+				pBody.setUserData(this);
 				shape.dispose();
 				return pBody;
 		}

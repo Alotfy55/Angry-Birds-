@@ -22,7 +22,7 @@ public class Pig extends Everything{
 						def.type = BodyDef.BodyType.DynamicBody;
 				def.position.set(x/PPM,y/PPM);
 				def.fixedRotation = false ;
-				def.angularDamping = 4f;
+				def.angularDamping = 2f;
 
 
 				pBody = world.createBody(def);
@@ -32,12 +32,13 @@ public class Pig extends Everything{
 
 
 				fixtureDef.shape = shape ;
-				fixtureDef.friction = 1f;
+				fixtureDef.friction = 0.2f;
 				fixtureDef.density= 0.2f;
 
 
 
 				pBody.createFixture(fixtureDef);
+				pBody.setUserData(this);
 				shape.dispose();
 				return pBody;
 		}

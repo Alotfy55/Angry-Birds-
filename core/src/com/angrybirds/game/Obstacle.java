@@ -42,13 +42,14 @@ public class Obstacle extends Everything{
 				shape.setAsBox(width/PPM , height/PPM);
 
 				fixtureDef.shape = shape ;
-				fixtureDef.restitution = 0.5f;
-				fixtureDef.friction = 0.5f ;
-				fixtureDef.density = 1f;
+				fixtureDef.restitution = 0.3f;
+				fixtureDef.friction = 0.8f ;
+				fixtureDef.density = 0.8f;
 
 
 
 				pBody.createFixture(fixtureDef);
+				pBody.setUserData(this);
 				shape.dispose();
 				return pBody;
 		}

@@ -12,13 +12,15 @@ import com.badlogic.gdx.physics.box2d.*;
 import static com.angrybirds.game.game.PPM;
 
 public abstract class Everything  {
-		protected String[] imgPath ;
+	protected String[] imgPath ;
 	protected int health ;
 	protected int condition;
 	int height;
 	int width;
 	protected Body body;
 	protected Sprite sprite;
+	boolean contacted;
+	boolean exist;
 
 
 	public Everything(World world, int x , int y , int width , int height , boolean isStatic , Sprite sprite){
@@ -29,6 +31,10 @@ public abstract class Everything  {
 		this.width = width ;
 
 		this.sprite = sprite ;
+
+		this.contacted = false;
+
+		this.exist = true;
 	}
 	protected abstract Body create(int x , int y , int width , int height , boolean isStatic, World world );
 
