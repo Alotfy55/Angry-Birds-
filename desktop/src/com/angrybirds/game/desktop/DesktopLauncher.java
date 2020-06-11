@@ -7,7 +7,6 @@ import com.angrybirds.game.game;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		System.out.println("rerf");
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.height=720;
 		config.width=1280;

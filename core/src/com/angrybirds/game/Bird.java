@@ -1,15 +1,24 @@
 package com.angrybirds.game;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
-
 import static com.angrybirds.game.game.PPM;
 
 public class Bird extends Everything {
 
 
-		public Bird(World world, int x , int y , int width , int height , boolean isStatic , Sprite sprite) {
-			super(world,x,y,width,height,isStatic ,sprite);
+		public Bird(World world, int x , int y , int width , int height , boolean isStatic) {
+			super(width, height , 100);
+
+			this.texture = new Texture[2];
+			this.sprite = new Sprite[2];
+
+			this.texture[0] = new Texture("RED.png");
+			this.texture[1] = new Texture("Red_hurt.png");
+
+			this.sprite[0] = new Sprite(this.texture[0]);
+			this.sprite[1] = new Sprite(this.texture[1]);
 
 			body = create(x,y,width,height,isStatic,world);
 		}
@@ -37,18 +46,21 @@ public class Bird extends Everything {
 				fixtureDef.friction = 1f ;
 				fixtureDef.density = 1f;
 
-
-
-
 				pBody.createFixture(fixtureDef);
+				pBody.setUserData(this);
 				shape.dispose();
 				return pBody;
 		}
 
 
-		public int getCondition() {
-				if (health > 50)
-						return 0 ;
-				else return 1;
+		public void Condition() {
+			if(this.health >= 50)
+			{
+				this.condition = 0;
+			}
+			else if (this.health > 0 && this.health < 50)
+			{
+				this.condition = 1;
+			}
 		}
 }
