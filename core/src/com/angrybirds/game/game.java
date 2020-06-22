@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
-import org.graalvm.compiler.virtual.phases.ea.PartialEscapeClosure;
+//import org.graalvm.compiler.virtual.phases.ea.PartialEscapeClosure;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -31,7 +31,7 @@ public class game extends ApplicationAdapter {
 		OrthographicCamera camera;
 
 		static int NumOfObjects;
-		static int NumOfPigs;
+		static int NumOfPigs , layoutWidth , layoutHeight[];
 		static Everything player, levelObjects[], enemies[] ,bedRock;
 		static Bird_Launcher launcher;
 
@@ -54,27 +54,16 @@ public class game extends ApplicationAdapter {
 			pausePhysics = true;
 			hold = false;
 
-			NumOfObjects = 10;
-			NumOfPigs = 7;
+			NumOfObjects = 0;
+			NumOfPigs = 0;
 			batch = new SpriteBatch();
 			batch.setProjectionMatrix(camera.combined);
 			background = new Texture("background.png");
 			test1 = new Sprite(background);
 
-			launcher = new Bird_Launcher(50,100, 20 ,40);
+			createLevel();
+			//launcher = new Bird_Launcher(50,100, 20 ,40);
 			player = new Bird(world, 50, 100, 10, 10, false);
-			enemies = new Pig[NumOfPigs];
-			levelObjects = new Obstacle[NumOfObjects];
-
-			for ( int i = 0 ; i < NumOfObjects ; i++){
-				levelObjects[i] = new Obstacle(world,550 , 75+ i*40,  5,20 , false);
-			}
-
-			for (int i = 0 ; i < NumOfPigs ; i++) {
-				enemies[i] = new Pig(world,450 , 75+ i*40,  10,10 , false);
-			}
-
-
 
 			bedRock = new Obstacle( world ,Gdx.graphics.getWidth() / 2, 55, 1000, 1, true);
 		}
@@ -107,7 +96,7 @@ public class game extends ApplicationAdapter {
 				getMouseInput();
 			}
 
-			batch.draw(launcher.body, launcher.position.x, launcher.position.y, launcher.width, launcher.height);
+			//batch.draw(launcher.body, launcher.position.x, launcher.position.y, launcher.width, launcher.height);
 
 			for ( int i = 0 ; i < NumOfObjects ; i++) {
 				if(levelObjects[i].exist) {
@@ -233,6 +222,40 @@ public class game extends ApplicationAdapter {
 			{
 				world.destroyBody(enemies[i].body);
 				enemies[i].destroyed = true;
+			}
+		}
+	}
+
+	public void createLevel(){
+		layoutWidth = (int) ((Math.random() * 10) % 5) + 1 ;
+		layoutHeight = new int [layoutWidth];
+		for ( int i = 0; i < layoutWidth;i++)
+		{
+			layoutHeight[i] = (int) ((Math.random() * 10) % 5) + 1 ;
+			NumOfPigs += layoutHeight[i];
+		}
+		enemies = new Pig[NumOfPigs];
+		NumOfObjects = 3*NumOfPigs;
+		levelObjects = new Obstacle[NumOfObjects];
+		createBodies(57 , 400);
+	}
+
+	private void createBodies(int groundlevel , int startingX) {
+		int enemiesCounter = 0;
+		int woodCounter = 0;
+		for (int i = 0 ; i < layoutWidth ; i++){
+			startingX += (4*5 + 20) ;
+			for (int j = 0 ; j < layoutHeight[i] ; j++){
+
+				enemies[enemiesCounter++] = new Pig(world,startingX, groundlevel + j*10 + j*(2*20 + 2*5) +10,  10,10 , false );
+
+				levelObjects[woodCounter++] = new Obstacle(world,startingX - 17 , groundlevel + 20 + j*(40 + 10),  5,20 , false );
+				levelObjects[woodCounter++] = new Obstacle(world,startingX + 17 , groundlevel + 20 + j*(40 + 10),  5,20 , false );
+
+				levelObjects[woodCounter] = new Obstacle(world , startingX , groundlevel + (j+1)*(10 + 40) , 5 , 20 ,false);
+				levelObjects[woodCounter].body.setTransform(levelObjects[woodCounter].body.getPosition().x , levelObjects[woodCounter].body.getPosition().y , (float) (90*(Math.PI/180)));
+				woodCounter++;
+
 			}
 		}
 	}
