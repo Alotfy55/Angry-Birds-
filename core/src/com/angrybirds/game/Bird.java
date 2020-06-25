@@ -3,7 +3,7 @@ package com.angrybirds.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
-import static com.angrybirds.game.game.PPM;
+import static com.angrybirds.game.GameScreen.PPM;
 
 public class Bird extends Everything {
 

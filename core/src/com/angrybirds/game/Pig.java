@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
 
-import static com.angrybirds.game.game.PPM;
+import static com.angrybirds.game.GameScreen.PPM;
 
 
 public class Pig extends Everything{

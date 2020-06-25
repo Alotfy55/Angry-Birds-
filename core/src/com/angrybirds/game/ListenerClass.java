@@ -21,18 +21,18 @@ public class ListenerClass implements ContactListener {
     @Override
     public void beginContact(Contact cp) {
 
-        float PlayerVelocity = (float)Math.sqrt(Math.pow(game.player.body.getLinearVelocity().x,2)+Math.pow(game.player.body.getLinearVelocity().y,2));
+        float PlayerVelocity = (float)Math.sqrt(Math.pow(GameScreen.player.body.getLinearVelocity().x,2)+Math.pow(GameScreen.player.body.getLinearVelocity().y,2));
 
-        float []ObjectVelocity = new float[game.NumOfObjects];
-        for(int i = 0 ; i < game.NumOfObjects ; i++)
+        float []ObjectVelocity = new float[GameScreen.NumOfObjects];
+        for(int i = 0 ; i < GameScreen.NumOfObjects ; i++)
         {
-            ObjectVelocity[i] = (float)Math.sqrt(Math.pow(game.levelObjects[i].body.getLinearVelocity().x,2)+Math.pow(game.levelObjects[i].body.getLinearVelocity().y,2));
+            ObjectVelocity[i] = (float)Math.sqrt(Math.pow(GameScreen.levelObjects[i].body.getLinearVelocity().x,2)+Math.pow(GameScreen.levelObjects[i].body.getLinearVelocity().y,2));
         }
 
-        float []EnemiesVelocity = new float[game.NumOfPigs];
-        for(int i = 0 ; i < game.NumOfPigs ; i++)
+        float []EnemiesVelocity = new float[GameScreen.NumOfPigs];
+        for(int i = 0 ; i < GameScreen.NumOfPigs ; i++)
         {
-            EnemiesVelocity[i] = (float)Math.sqrt(Math.pow(game.enemies[i].body.getLinearVelocity().x,2)+Math.pow(game.enemies[i].body.getLinearVelocity().y,2));
+            EnemiesVelocity[i] = (float)Math.sqrt(Math.pow(GameScreen.enemies[i].body.getLinearVelocity().x,2)+Math.pow(GameScreen.enemies[i].body.getLinearVelocity().y,2));
         }
 
 
@@ -44,11 +44,11 @@ public class ListenerClass implements ContactListener {
 
         if (b1.getUserData().getClass() == Bird.class && b2.getUserData().getClass() == Obstacle.class)
         {
-            game.player.health = 45;
-            for (int i = 0; i < game.NumOfObjects; i++) {
-                if(game.levelObjects[i].exist == true) {
-                    if (b2.getUserData() == game.levelObjects[i]) {
-                        game.levelObjects[i].health -= PlayerVelocity*5 + ObjectVelocity[i];
+            GameScreen.player.health = 45;
+            for (int i = 0; i < GameScreen.NumOfObjects; i++) {
+                if(GameScreen.levelObjects[i].exist == true) {
+                    if (b2.getUserData() == GameScreen.levelObjects[i]) {
+                        GameScreen.levelObjects[i].health -= PlayerVelocity*5 + ObjectVelocity[i];
                     }
                 }
             }
@@ -56,11 +56,11 @@ public class ListenerClass implements ContactListener {
 
         if (b1.getUserData().getClass() == Obstacle.class && b2.getUserData().getClass() == Bird.class)
         {
-            game.player.health = 45;
-            for (int i = 0; i < game.NumOfObjects; i++) {
-                if(game.levelObjects[i].exist == true) {
-                    if (b1.getUserData() == game.levelObjects[i]) {
-                        game.levelObjects[i].health -= PlayerVelocity*5 + ObjectVelocity[i];
+            GameScreen.player.health = 45;
+            for (int i = 0; i < GameScreen.NumOfObjects; i++) {
+                if(GameScreen.levelObjects[i].exist == true) {
+                    if (b1.getUserData() == GameScreen.levelObjects[i]) {
+                        GameScreen.levelObjects[i].health -= PlayerVelocity*5 + ObjectVelocity[i];
                     }
                 }
             }
@@ -68,10 +68,10 @@ public class ListenerClass implements ContactListener {
 
         if (b1.getUserData().getClass() == Bird.class && b2.getUserData().getClass() == Pig.class)
         {
-            for (int i = 0; i < game.NumOfPigs; i++) {
-                if(game.enemies[i].exist == true) {
-                    if (b2.getUserData() == game.enemies[i]) {
-                        game.enemies[i].health -= PlayerVelocity*5 + EnemiesVelocity[i];
+            for (int i = 0; i < GameScreen.NumOfPigs; i++) {
+                if(GameScreen.enemies[i].exist == true) {
+                    if (b2.getUserData() == GameScreen.enemies[i]) {
+                        GameScreen.enemies[i].health -= PlayerVelocity*5 + EnemiesVelocity[i];
                     }
                 }
             }
@@ -79,10 +79,10 @@ public class ListenerClass implements ContactListener {
 
         if (b1.getUserData().getClass() == Pig.class && b2.getUserData().getClass() == Bird.class)
         {
-            for (int i = 0; i < game.NumOfPigs; i++) {
-                if(game.enemies[i].exist == true) {
-                    if (b1.getUserData() == game.enemies[i]) {
-                        game.enemies[i].health -= PlayerVelocity*5 + EnemiesVelocity[i];
+            for (int i = 0; i < GameScreen.NumOfPigs; i++) {
+                if(GameScreen.enemies[i].exist == true) {
+                    if (b1.getUserData() == GameScreen.enemies[i]) {
+                        GameScreen.enemies[i].health -= PlayerVelocity*5 + EnemiesVelocity[i];
                     }
                 }
             }
@@ -92,29 +92,29 @@ public class ListenerClass implements ContactListener {
         {
             float v1 = 0;
             float v2 = 0;
-            if (b1.getUserData() == game.bedRock)
+            if (b1.getUserData() == GameScreen.bedRock)
             {
                    v1 = 0;
             }
             else {
-                for (int i = 0; i < game.NumOfObjects; i++) {
-                    if (game.levelObjects[i].exist == true) {
-                        if (b1.getUserData() == game.levelObjects[i]) {
+                for (int i = 0; i < GameScreen.NumOfObjects; i++) {
+                    if (GameScreen.levelObjects[i].exist == true) {
+                        if (b1.getUserData() == GameScreen.levelObjects[i]) {
                             v1 = ObjectVelocity[i];
                         }
                     }
                 }
             }
-            for (int i = 0; i < game.NumOfPigs; i++) {
-                if(game.enemies[i].exist == true) {
-                    if (b2.getUserData() == game.enemies[i]) {
+            for (int i = 0; i < GameScreen.NumOfPigs; i++) {
+                if(GameScreen.enemies[i].exist == true) {
+                    if (b2.getUserData() == GameScreen.enemies[i]) {
                         v2 = Math.abs(EnemiesVelocity[i]);
                         if (v1 != 0) {
-                            game.enemies[i].health -= v1 * 15 + v2 * 2;
+                            GameScreen.enemies[i].health -= v1 * 15 + v2 * 2;
                         }
                         else
                         {
-                            game.enemies[i].health -= v2 * 10;
+                            GameScreen.enemies[i].health -= v2 * 10;
                         }
                     }
                 }
@@ -125,30 +125,30 @@ public class ListenerClass implements ContactListener {
         {
             float v1 = 0;
             float v2 = 0;
-            if(b2.getUserData() == game.bedRock)
+            if(b2.getUserData() == GameScreen.bedRock)
             {
                 v2 = 0;
             }
             else {
-                for (int i = 0; i < game.NumOfObjects; i++) {
-                    if (game.levelObjects[i].exist == true) {
-                        if (b2.getUserData() == game.levelObjects[i]) {
+                for (int i = 0; i < GameScreen.NumOfObjects; i++) {
+                    if (GameScreen.levelObjects[i].exist == true) {
+                        if (b2.getUserData() == GameScreen.levelObjects[i]) {
                             v1 = ObjectVelocity[i];
                         }
                     }
                 }
             }
 
-            for (int i = 0; i < game.NumOfPigs; i++) {
-                if (game.enemies[i].exist == true) {
-                    if (b1.getUserData() == game.enemies[i]) {
+            for (int i = 0; i < GameScreen.NumOfPigs; i++) {
+                if (GameScreen.enemies[i].exist == true) {
+                    if (b1.getUserData() == GameScreen.enemies[i]) {
                         v2 = EnemiesVelocity[i];
                         if (v1 != 0) {
-                            game.enemies[i].health -= v1 * 15 + v2 * 2;
+                            GameScreen.enemies[i].health -= v1 * 15 + v2 * 2;
                         }
                         else
                         {
-                            game.enemies[i].health -= v2 * 10;
+                            GameScreen.enemies[i].health -= v2 * 10;
                         }
                     }
                 }
@@ -163,25 +163,25 @@ public class ListenerClass implements ContactListener {
             int p1 = 0;
             int p2 = 0;
 
-            for (int i = 0; i < game.NumOfObjects; i++) {
-                if(game.levelObjects[i].exist == true) {
-                    if (b1.getUserData() == game.levelObjects[i]) {
+            for (int i = 0; i < GameScreen.NumOfObjects; i++) {
+                if(GameScreen.levelObjects[i].exist == true) {
+                    if (b1.getUserData() == GameScreen.levelObjects[i]) {
                         v1 = ObjectVelocity[i];
                         p1 = i;
                     }
                 }
             }
-            for (int i = 0; i < game.NumOfObjects; i++) {
-                if(game.levelObjects[i].exist == true) {
-                    if (b2.getUserData() == game.levelObjects[i]) {
+            for (int i = 0; i < GameScreen.NumOfObjects; i++) {
+                if(GameScreen.levelObjects[i].exist == true) {
+                    if (b2.getUserData() == GameScreen.levelObjects[i]) {
                         v2 = ObjectVelocity[i];
                         p2 = i;
                     }
                 }
             }
 
-            game.levelObjects[p1].health -= v1*5+v2*3;
-            game.levelObjects[p2].health -= v1*5+v2*3;
+            GameScreen.levelObjects[p1].health -= v1*5+v2*3;
+            GameScreen.levelObjects[p2].health -= v1*5+v2*3;
         }
     }
 };
