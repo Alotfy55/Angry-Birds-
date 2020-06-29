@@ -50,6 +50,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        MainMenu.set = true;
         Box2D.init();
         world = new World(new Vector2(0, -10), false);
         lis = new ListenerClass();

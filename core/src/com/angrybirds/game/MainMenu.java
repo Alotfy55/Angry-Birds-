@@ -26,8 +26,7 @@ public class MainMenu implements Screen {
     BitmapFont font;
     Skin skin;
     TextureAtlas buttonAtlas;
-
-    private boolean[] click;
+    static boolean set;
 
 
     public MainMenu(Project_Entery PE)
@@ -37,17 +36,12 @@ public class MainMenu implements Screen {
 
     @Override
     public void show() {
+        set = false;
         this.WP = new Texture("MenuWP.jpg");
         this.Wallpaper = new Sprite(WP);
         Wallpaper.setPosition(-50,-280);
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-
-        click = new boolean[4];
-        for (int i = 0 ; i < 4 ; ++i)
-        {
-            click[i] = false;
-        }
 
         button = new TextButton[4];
         font = new BitmapFont(Gdx.files.internal("font/w.fnt"), false);
@@ -63,7 +57,9 @@ public class MainMenu implements Screen {
         button[0].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                PE.setScreen(new GameScreen(PE,ThemeName));
+                if (!set) {
+                    PE.setScreen(new GameScreen(PE, ThemeName));
+                }
             }
         });
         stage.addActor(button[0]);
@@ -72,8 +68,9 @@ public class MainMenu implements Screen {
         button[1].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                hide();
-                PE.setScreen(new ThemeScreen(PE));
+                if(!set) {
+                    PE.setScreen(new ThemeScreen(PE));
+                }
             }
         });
         stage.addActor(button[1]);
@@ -85,7 +82,9 @@ public class MainMenu implements Screen {
         button[3].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                dispose();
+                if(!set) {
+                    dispose();
+                }
             }
         });
         stage.addActor(button[3]);
