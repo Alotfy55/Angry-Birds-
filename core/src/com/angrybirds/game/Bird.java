@@ -14,8 +14,8 @@ public class Bird extends Everything {
 			this.texture = new Texture[2];
 			this.sprite = new Sprite[2];
 
-			this.texture[0] = new Texture("RED.png");
-			this.texture[1] = new Texture("Red_hurt.png");
+			this.texture[0] = GameScreen.theme.RED;
+			this.texture[1] = GameScreen.theme.RED_Hurt;
 
 			this.sprite[0] = new Sprite(this.texture[0]);
 			this.sprite[1] = new Sprite(this.texture[1]);
@@ -62,5 +62,9 @@ public class Bird extends Everything {
 			{
 				this.condition = 1;
 			}
+		}
+
+		public void Special_ability() {
+
 		}
 }

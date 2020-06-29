@@ -54,7 +54,31 @@ public class ListenerClass implements ContactListener {
             }
         }
 
+        if (b1.getUserData().getClass() == Yellow_Bird.class && b2.getUserData().getClass() == Obstacle.class)
+        {
+            GameScreen.player.health = 45;
+            for (int i = 0; i < GameScreen.NumOfObjects; i++) {
+                if(GameScreen.levelObjects[i].exist == true) {
+                    if (b2.getUserData() == GameScreen.levelObjects[i]) {
+                        GameScreen.levelObjects[i].health -= PlayerVelocity*5 + ObjectVelocity[i];
+                    }
+                }
+            }
+        }
+
         if (b1.getUserData().getClass() == Obstacle.class && b2.getUserData().getClass() == Bird.class)
+        {
+            GameScreen.player.health = 45;
+            for (int i = 0; i < GameScreen.NumOfObjects; i++) {
+                if(GameScreen.levelObjects[i].exist == true) {
+                    if (b1.getUserData() == GameScreen.levelObjects[i]) {
+                        GameScreen.levelObjects[i].health -= PlayerVelocity*5 + ObjectVelocity[i];
+                    }
+                }
+            }
+        }
+
+        if (b1.getUserData().getClass() == Obstacle.class && b2.getUserData().getClass() == Yellow_Bird.class)
         {
             GameScreen.player.health = 45;
             for (int i = 0; i < GameScreen.NumOfObjects; i++) {
@@ -77,7 +101,29 @@ public class ListenerClass implements ContactListener {
             }
         }
 
+        if (b1.getUserData().getClass() == Yellow_Bird.class && b2.getUserData().getClass() == Pig.class)
+        {
+            for (int i = 0; i < GameScreen.NumOfPigs; i++) {
+                if(GameScreen.enemies[i].exist == true) {
+                    if (b2.getUserData() == GameScreen.enemies[i]) {
+                        GameScreen.enemies[i].health -= PlayerVelocity*5 + EnemiesVelocity[i];
+                    }
+                }
+            }
+        }
+
         if (b1.getUserData().getClass() == Pig.class && b2.getUserData().getClass() == Bird.class)
+        {
+            for (int i = 0; i < GameScreen.NumOfPigs; i++) {
+                if(GameScreen.enemies[i].exist == true) {
+                    if (b1.getUserData() == GameScreen.enemies[i]) {
+                        GameScreen.enemies[i].health -= PlayerVelocity*5 + EnemiesVelocity[i];
+                    }
+                }
+            }
+        }
+
+        if (b1.getUserData().getClass() == Pig.class && b2.getUserData().getClass() == Yellow_Bird.class)
         {
             for (int i = 0; i < GameScreen.NumOfPigs; i++) {
                 if(GameScreen.enemies[i].exist == true) {

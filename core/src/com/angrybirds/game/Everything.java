@@ -35,4 +35,6 @@ public abstract class Everything  {
 
 	protected abstract void Condition();
 
+	protected abstract void Special_ability();
+
 }

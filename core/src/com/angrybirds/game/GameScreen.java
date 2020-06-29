@@ -1,16 +1,19 @@
 package com.angrybirds.game;
 
-import com.badlogic.gdx.Screen;
-
-import com.badlogic.gdx.ApplicationAdapter;
+import Themes.Theme;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2D;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class GameScreen implements Screen {
 
@@ -18,25 +21,32 @@ public class GameScreen implements Screen {
 
     Texture img;
     Texture background;
-
-    Sprite test1;
+    Sprite BG;
 
     public static World world;
     Box2DDebugRenderer dDebugRenderer;
     OrthographicCamera camera;
 
+    public static Theme theme;
     static int NumOfObjects;
     static int NumOfPigs , layoutWidth , layoutHeight[];
     static Everything player, levelObjects[], enemies[] ,bedRock;
     static Bird_Launcher launcher;
 
 
+    Project_Entery PE;
     boolean pausePhysics;
-    boolean hold;
+    static boolean hold;
     public static final float PPM = 32;
     public Vector2 mouseOrigin;
     final int MouseLimit = 50;
     ListenerClass lis;
+
+    public GameScreen(Project_Entery PE, String Name) {
+        this.PE = PE;
+        theme = new Theme(Name);
+
+    }
 
     @Override
     public void show() {
@@ -48,19 +58,17 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera(20,10);
         pausePhysics = true;
         hold = false;
-
         NumOfObjects = 0;
         NumOfPigs = 0;
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
-        background = new Texture("background.png");
-        test1 = new Sprite(background);
+        background = theme.Background;
+        BG = new Sprite(background);
 
         createLevel();
-        //launcher = new Bird_Launcher(50,100, 20 ,40);
-        player = new Bird(world, 50, 100, 10, 10, false);
+        player = new Yellow_Bird(world, 50, 100, 10, 10, false);
 
-        bedRock = new Obstacle( world ,Gdx.graphics.getWidth() / 2, 55, 1000, 1, true);
+        bedRock = new Obstacle( world ,Gdx.graphics.getWidth() / 2, 27, 1000, 1, true);
     }
 
     @Override
@@ -76,7 +84,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        batch.draw(test1, 0, 0, 30, 5);
+        batch.draw(BG, 0,0,20,11.25f);
 
 
 
@@ -90,6 +98,7 @@ public class GameScreen implements Screen {
         {
             getMouseInput();
         }
+
 
         //batch.draw(launcher.body, launcher.position.x, launcher.position.y, launcher.width, launcher.height);
 
@@ -113,6 +122,10 @@ public class GameScreen implements Screen {
         player.sprite[player.condition].setOrigin(player.sprite[player.condition].getWidth()/2 , player.sprite[player.condition].getHeight()/2);
         player.sprite[player.condition].setRotation(MathUtils.radiansToDegrees * player.body.getAngle());
         player.sprite[player.condition].draw(batch);
+
+
+        player.Special_ability();
+
 
         for(int i = 0 ; i < GameScreen.NumOfObjects ; i++)
         {
@@ -237,7 +250,7 @@ public class GameScreen implements Screen {
         enemies = new Pig[NumOfPigs];
         NumOfObjects = 3*NumOfPigs;
         levelObjects = new Obstacle[NumOfObjects];
-        createBodies(57 , 400);
+        createBodies(28 , 400);
     }
 
     private void createBodies(int groundlevel , int startingX) {

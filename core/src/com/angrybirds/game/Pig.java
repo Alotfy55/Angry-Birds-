@@ -18,13 +18,13 @@ public class Pig extends Everything{
 			this.texture = new Texture[7];
 			this.sprite = new Sprite[7];
 
-			this.texture[0] = new Texture("Pig.png");
-			this.texture[1] = new Texture("Pig_hurt.png");
-			this.texture[2] = new Texture("Woosh1.png");
-			this.texture[3] = new Texture("Woosh2.png");
-			this.texture[4] = new Texture("Woosh3.png");
-			this.texture[5] = new Texture("Woosh4.png");
-			this.texture[6] = new Texture("Woosh5.png");
+			this.texture[0] = GameScreen.theme.Pig;
+			this.texture[1] = GameScreen.theme.Pig_Hurt;
+			this.texture[2] = GameScreen.theme.Woosh1;
+			this.texture[3] = GameScreen.theme.Woosh2;
+			this.texture[4] = GameScreen.theme.Woosh3;
+			this.texture[5] = GameScreen.theme.Woosh4;
+			this.texture[6] = GameScreen.theme.Woosh5;
 
 			for(int i = 0 ; i < 7 ; i++)
 			{
@@ -84,6 +84,11 @@ public class Pig extends Everything{
 					this.exist = false;
 			}
 		}
+	}
+
+	@Override
+	protected void Special_ability() {
+
 	}
 
 }
