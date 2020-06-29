@@ -53,7 +53,9 @@ public class ThemeScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 MainMenu.ThemeName = "Spurs";
+                hide();
                 PE.setScreen(new MainMenu(PE));
+
             }
         });
         stage.addActor(button[0]);
@@ -64,6 +66,7 @@ public class ThemeScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 MainMenu.ThemeName = "StarWars";
+                hide();
                 PE.setScreen(new MainMenu(PE));
             }
         });
@@ -75,6 +78,7 @@ public class ThemeScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 MainMenu.ThemeName = "Avengers";
+                hide();
                 PE.setScreen(new MainMenu(PE));
             }
         });
@@ -86,6 +90,7 @@ public class ThemeScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 MainMenu.ThemeName = "Normal";
+                hide();
                 PE.setScreen(new MainMenu(PE));
             }
         });
@@ -97,6 +102,7 @@ public class ThemeScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 MainMenu.ThemeName = "Space";
+                hide();
                 PE.setScreen(new MainMenu(PE));
             }
         });

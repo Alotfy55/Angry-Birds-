@@ -84,6 +84,7 @@ public class SplashScreen2 implements Screen {
     }
 
     private void tweenCompleted() {
+        hide();
         this.PE.setScreen(new MainMenu(PE));
     }
 }

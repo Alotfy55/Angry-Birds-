@@ -83,6 +83,7 @@ public class SplashScreen1 implements Screen {
     }
 
     private void tweenCompleted() {
+        hide();
         PE.setScreen(new SplashScreen2(PE));
     }
 

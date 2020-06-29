@@ -35,7 +35,7 @@ public class GameScreen implements Screen {
 
 
     Project_Entery PE;
-    boolean pausePhysics;
+    static boolean pausePhysics;
     static boolean hold;
     public static final float PPM = 32;
     public Vector2 mouseOrigin;
@@ -90,11 +90,11 @@ public class GameScreen implements Screen {
 
         if ( Gdx.input.getPressure() == 1 && pausePhysics && includes((Bird) player , new Vector2(Gdx.input.getX()/2,(Gdx.graphics.getHeight() - Gdx.input.getY()) /2 )))
         {
-            hold =true;
+            hold = true;
             if (mouseOrigin == null)
                 mouseOrigin = new Vector2(Gdx.input.getX() ,Gdx.graphics.getHeight() -  Gdx.input.getY());
         }
-        if (hold)
+        if (hold && pausePhysics)
         {
             getMouseInput();
         }
@@ -200,17 +200,15 @@ public class GameScreen implements Screen {
     }
 
     public void getMouseInput() {
-
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)  )
-        {
-            player.body.setTransform((float) Gdx.input.getX()/PPM/2 ,(float) (Gdx.graphics.getHeight() - Gdx.input.getY())/PPM/2,0);
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            player.body.setTransform((float) Gdx.input.getX() / PPM / 2, (float) (Gdx.graphics.getHeight() - Gdx.input.getY()) / PPM / 2, 0);
         }
-        if(Gdx.input.getPressure() == 0)
-        {
-            hold=false;
+        if (Gdx.input.getPressure() == 0) {
+            hold = false;
             pausePhysics = false;
-            player.body.setLinearVelocity( ((mouseOrigin.x - Gdx.input.getX()) /8 ) , (mouseOrigin.y - (Gdx.graphics.getHeight() - Gdx.input.getY()))/4);
+            player.body.setLinearVelocity(((mouseOrigin.x - Gdx.input.getX()) / 8), (mouseOrigin.y - (Gdx.graphics.getHeight() - Gdx.input.getY())) / 4);
         }
+
     }
 
     public boolean includes(Bird player,Vector2 mousePoint ) {

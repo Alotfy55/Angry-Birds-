@@ -28,8 +28,8 @@ public class Yellow_Bird extends Bird {
     @Override
     public void Special_ability()
     {
-        if (!GameScreen.hold) {
-            if (!Special_Used) {
+        if(GameScreen.pausePhysics == false) {
+            if (!Special_Used && this.exist) {
                 if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                     Special_Used = true;
                     this.body.setLinearVelocity(this.body.getLinearVelocity().x + 30, this.body.getLinearVelocity().y);
