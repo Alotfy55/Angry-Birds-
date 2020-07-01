@@ -1,8 +1,15 @@
 package com.angrybirds.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.physics.box2d.*;
 
 public class ListenerClass implements ContactListener {
+
+    private Sound BirdCollision = Gdx.audio.newSound(Gdx.files.internal("Sound/birdCollision.wav"));
+    private Sound PigCollision = Gdx.audio.newSound(Gdx.files.internal("Sound/pigCollision.wav"));
+    private Sound WoodCollision = Gdx.audio.newSound(Gdx.files.internal("Sound/woodCollision.wav"));
+
     @Override
     public void endContact(Contact cp) {
 
@@ -44,11 +51,13 @@ public class ListenerClass implements ContactListener {
 
         if (b1.getUserData().getClass() == Bird.class && b2.getUserData().getClass() == Obstacle.class)
         {
-            GameScreen.player.health = 45;
+            GameScreen.player.health -= 45;
             for (int i = 0; i < GameScreen.NumOfObjects; i++) {
                 if(GameScreen.levelObjects[i].exist == true) {
                     if (b2.getUserData() == GameScreen.levelObjects[i]) {
                         GameScreen.levelObjects[i].health -= PlayerVelocity*5 + ObjectVelocity[i];
+                        this.BirdCollision.play();
+                        this.WoodCollision.play();
                     }
                 }
             }
@@ -56,11 +65,13 @@ public class ListenerClass implements ContactListener {
 
         if (b1.getUserData().getClass() == Yellow_Bird.class && b2.getUserData().getClass() == Obstacle.class)
         {
-            GameScreen.player.health = 45;
+            GameScreen.player.health -= 45;
             for (int i = 0; i < GameScreen.NumOfObjects; i++) {
                 if(GameScreen.levelObjects[i].exist == true) {
                     if (b2.getUserData() == GameScreen.levelObjects[i]) {
                         GameScreen.levelObjects[i].health -= PlayerVelocity*5 + ObjectVelocity[i];
+                        this.BirdCollision.play();
+                        this.WoodCollision.play();
                     }
                 }
             }
@@ -68,11 +79,13 @@ public class ListenerClass implements ContactListener {
 
         if (b1.getUserData().getClass() == Obstacle.class && b2.getUserData().getClass() == Bird.class)
         {
-            GameScreen.player.health = 45;
+            GameScreen.player.health -= 45;
             for (int i = 0; i < GameScreen.NumOfObjects; i++) {
                 if(GameScreen.levelObjects[i].exist == true) {
                     if (b1.getUserData() == GameScreen.levelObjects[i]) {
                         GameScreen.levelObjects[i].health -= PlayerVelocity*5 + ObjectVelocity[i];
+                        this.BirdCollision.play();
+                        this.WoodCollision.play();
                     }
                 }
             }
@@ -80,11 +93,13 @@ public class ListenerClass implements ContactListener {
 
         if (b1.getUserData().getClass() == Obstacle.class && b2.getUserData().getClass() == Yellow_Bird.class)
         {
-            GameScreen.player.health = 45;
+            GameScreen.player.health -= 45;
             for (int i = 0; i < GameScreen.NumOfObjects; i++) {
                 if(GameScreen.levelObjects[i].exist == true) {
                     if (b1.getUserData() == GameScreen.levelObjects[i]) {
                         GameScreen.levelObjects[i].health -= PlayerVelocity*5 + ObjectVelocity[i];
+                        this.BirdCollision.play();
+                        this.WoodCollision.play();
                     }
                 }
             }
@@ -96,6 +111,8 @@ public class ListenerClass implements ContactListener {
                 if(GameScreen.enemies[i].exist == true) {
                     if (b2.getUserData() == GameScreen.enemies[i]) {
                         GameScreen.enemies[i].health -= PlayerVelocity*5 + EnemiesVelocity[i];
+                        this.BirdCollision.play();
+                        this.PigCollision.play();
                     }
                 }
             }
@@ -107,6 +124,8 @@ public class ListenerClass implements ContactListener {
                 if(GameScreen.enemies[i].exist == true) {
                     if (b2.getUserData() == GameScreen.enemies[i]) {
                         GameScreen.enemies[i].health -= PlayerVelocity*5 + EnemiesVelocity[i];
+                        this.BirdCollision.play();
+                        this.PigCollision.play();
                     }
                 }
             }
@@ -118,6 +137,8 @@ public class ListenerClass implements ContactListener {
                 if(GameScreen.enemies[i].exist == true) {
                     if (b1.getUserData() == GameScreen.enemies[i]) {
                         GameScreen.enemies[i].health -= PlayerVelocity*5 + EnemiesVelocity[i];
+                        this.BirdCollision.play();
+                        this.PigCollision.play();
                     }
                 }
             }
@@ -129,6 +150,8 @@ public class ListenerClass implements ContactListener {
                 if(GameScreen.enemies[i].exist == true) {
                     if (b1.getUserData() == GameScreen.enemies[i]) {
                         GameScreen.enemies[i].health -= PlayerVelocity*5 + EnemiesVelocity[i];
+                        this.BirdCollision.play();
+                        this.PigCollision.play();
                     }
                 }
             }
@@ -136,6 +159,7 @@ public class ListenerClass implements ContactListener {
 
         if (b1.getUserData().getClass() == Obstacle.class && b2.getUserData().getClass() == Pig.class)
         {
+
             float v1 = 0;
             float v2 = 0;
             if (b1.getUserData() == GameScreen.bedRock)
@@ -169,6 +193,7 @@ public class ListenerClass implements ContactListener {
 
         if (b1.getUserData().getClass() == Pig.class && b2.getUserData().getClass() == Obstacle.class)
         {
+
             float v1 = 0;
             float v2 = 0;
             if(b2.getUserData() == GameScreen.bedRock)
@@ -204,6 +229,7 @@ public class ListenerClass implements ContactListener {
 
         if (b1.getUserData().getClass() == Obstacle.class && b2.getUserData().getClass() == Obstacle.class)
         {
+
             float v1 = 0 ;
             float v2 = 0 ;
             int p1 = 0;

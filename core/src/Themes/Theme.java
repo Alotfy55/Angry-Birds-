@@ -1,5 +1,7 @@
 package Themes;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Theme {
@@ -19,6 +21,7 @@ public class Theme {
     public Texture Woosh3 ;
     public Texture Woosh4 ;
     public Texture Woosh5 ;
+    public Music GameMusic;
 
     public Theme(String Name)
     {
@@ -39,6 +42,7 @@ public class Theme {
             Woosh3 = new Texture("Normal/Woosh3.png");
             Woosh4 = new Texture("Normal/Woosh4.png");
             Woosh5 = new Texture("Normal/Woosh5.png");
+            GameMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/Normal.wav"));
         }
         else if(Name.equalsIgnoreCase("StarWars"))
         {
@@ -57,6 +61,7 @@ public class Theme {
             Woosh3 = new Texture("StarWars/Woosh3.png");
             Woosh4 = new Texture("StarWars/Woosh4.png");
             Woosh5 = new Texture("StarWars/Woosh5.png");
+            GameMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/StarWars.mp3"));
         }
         else if(Name.equalsIgnoreCase("Space"))
         {
@@ -75,6 +80,7 @@ public class Theme {
             Woosh3 = new Texture("Space/Woosh3.png");
             Woosh4 = new Texture("Space/Woosh4.png");
             Woosh5 = new Texture("Space/Woosh5.png");
+            GameMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/Space.mp3"));
         }
         else if(Name.equalsIgnoreCase("Avengers"))
         {
@@ -93,6 +99,7 @@ public class Theme {
             Woosh3 = new Texture("Avengers/Woosh3.png");
             Woosh4 = new Texture("Avengers/Woosh4.png");
             Woosh5 = new Texture("Avengers/Woosh5.png");
+            GameMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/Avengers.mp3"));
         }
         else if(Name.equalsIgnoreCase("Spurs"))
         {
@@ -111,6 +118,7 @@ public class Theme {
             Woosh3 = new Texture("Spurs/Woosh3.png");
             Woosh4 = new Texture("Spurs/Woosh4.png");
             Woosh5 = new Texture("Spurs/Woosh5.png");
+            GameMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/Spurs.mp3"));
         }
         else
         {
@@ -129,6 +137,7 @@ public class Theme {
             Woosh3 = new Texture("Normal/Woosh3.png");
             Woosh4 = new Texture("Normal/Woosh4.png");
             Woosh5 = new Texture("Normal/Woosh5.png");
+            GameMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/Normal.wav"));
         }
     }
 

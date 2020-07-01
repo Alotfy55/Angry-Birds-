@@ -33,13 +33,14 @@ public class ThemeScreen implements Screen {
 
     @Override
     public void show() {
+        MainMenu.mainMusic.stop();
         this.WP = new Texture("Themes.png");
         this.Wallpaper = new Sprite(WP);
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
         button = new TextButton[5];
-        font = new BitmapFont(Gdx.files.internal("font/w.fnt"), false);
+        font = new BitmapFont(Gdx.files.internal("font/font34.fnt"), false);
         skin = new Skin();
         buttonAtlas = new TextureAtlas(Gdx.files.internal("Button/Button.atlas"));
         skin.addRegions(buttonAtlas);

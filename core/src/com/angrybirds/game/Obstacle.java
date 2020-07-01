@@ -1,5 +1,6 @@
 package com.angrybirds.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
@@ -10,6 +11,8 @@ public class Obstacle extends Everything{
 	boolean rep;
 	public Obstacle(World world, int x , int y , int width , int height , boolean isStatic) {
 		super(width , height , 150);
+
+		Destroy = Gdx.audio.newSound(Gdx.files.internal("Sound/woodDestroyed.wav"));
 
 		rep = true;
 

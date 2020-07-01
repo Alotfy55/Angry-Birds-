@@ -11,13 +11,6 @@ Button
   orig: 492, 492
   offset: 0, 0
   index: -1
-Button2
-  rotate: false
-  xy: 2, 2
-  size: 492, 492
-  orig: 492, 492
-  offset: 0, 0
-  index: -1
 ButtonPressed
   rotate: false
   xy: 496, 2

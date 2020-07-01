@@ -2,6 +2,7 @@ package com.angrybirds.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -28,6 +29,8 @@ public class MainMenu implements Screen {
     TextureAtlas buttonAtlas;
     static boolean set;
 
+    static Music mainMusic;
+    static boolean playedMusic = false;
 
     public MainMenu(Project_Entery PE)
     {
@@ -37,6 +40,7 @@ public class MainMenu implements Screen {
     @Override
     public void show() {
         set = false;
+        mainMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/song.mp3"));
         this.WP = new Texture("MenuWP.jpg");
         this.Wallpaper = new Sprite(WP);
         Wallpaper.setPosition(-50,-280);
@@ -44,7 +48,7 @@ public class MainMenu implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         button = new TextButton[4];
-        font = new BitmapFont(Gdx.files.internal("font/w.fnt"), false);
+        font = new BitmapFont(Gdx.files.internal("font/font40.fnt"), false);
         skin = new Skin();
         buttonAtlas = new TextureAtlas(Gdx.files.internal("Button/Button.atlas"));
         skin.addRegions(buttonAtlas);
@@ -98,6 +102,9 @@ public class MainMenu implements Screen {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if(playedMusic == false) {
+            mainMusic.play();
+        }
         stage.act(delta);
         stage.getBatch().begin();
         stage.getBatch().draw(Wallpaper,-50,-280);

@@ -4,11 +4,13 @@ import Themes.Theme;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2D;
@@ -32,6 +34,10 @@ public class GameScreen implements Screen {
     static int NumOfPigs , layoutWidth , layoutHeight[];
     static Everything player, levelObjects[], enemies[] ,bedRock;
     static Bird_Launcher launcher;
+    static boolean player_exists;
+
+    public Music GameMusic;
+
 
 
     Project_Entery PE;
@@ -42,6 +48,8 @@ public class GameScreen implements Screen {
     final int MouseLimit = 50;
     ListenerClass lis;
 
+
+
     public GameScreen(Project_Entery PE, String Name) {
         this.PE = PE;
         theme = new Theme(Name);
@@ -50,7 +58,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        MainMenu.mainMusic.stop();
+        GameMusic = theme.GameMusic;
         MainMenu.set = true;
+
         Box2D.init();
         world = new World(new Vector2(0, -10), false);
         lis = new ListenerClass();
@@ -67,13 +78,17 @@ public class GameScreen implements Screen {
         BG = new Sprite(background);
 
         createLevel();
-        player = new Yellow_Bird(world, 50, 100, 10, 10, false);
+        player = new Yellow_Bird(world, 50, 78, 10, 10, false);
 
         bedRock = new Obstacle( world ,Gdx.graphics.getWidth() / 2, 27, 1000, 1, true);
+        launcher = new Bird_Launcher();
     }
 
     @Override
     public void render(float delta) {
+
+        GameMusic.play();
+
         if (pausePhysics)
             player.body.setAwake(false);
         else
@@ -84,24 +99,19 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(135, 206, 236, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
+
         batch.begin();
+
+
+
         batch.draw(BG, 0,0,20,11.25f);
 
 
-
-        if ( Gdx.input.getPressure() == 1 && pausePhysics && includes((Bird) player , new Vector2(Gdx.input.getX()/2,(Gdx.graphics.getHeight() - Gdx.input.getY()) /2 )))
-        {
-            hold = true;
-            if (mouseOrigin == null)
-                mouseOrigin = new Vector2(Gdx.input.getX() ,Gdx.graphics.getHeight() -  Gdx.input.getY());
-        }
-        if (hold && pausePhysics)
-        {
-            getMouseInput();
-        }
+        launcher.body.setPosition(37/PPM,27/PPM);
+        launcher.body.draw(batch);
 
 
-        //batch.draw(launcher.body, launcher.position.x, launcher.position.y, launcher.width, launcher.height);
 
         for ( int i = 0 ; i < NumOfObjects ; i++) {
             if(levelObjects[i].exist) {
@@ -119,10 +129,58 @@ public class GameScreen implements Screen {
                 enemies[i].sprite[enemies[i].condition].draw(batch);
             }
         }
-        player.sprite[player.condition].setBounds(player.body.getPosition().x - player.sprite[player.condition].getWidth()/(2) , player.body.getPosition().y - player.sprite[player.condition].getHeight()/(2) , 2*(player.width/PPM),2*(player.height/PPM));
-        player.sprite[player.condition].setOrigin(player.sprite[player.condition].getWidth()/2 , player.sprite[player.condition].getHeight()/2);
-        player.sprite[player.condition].setRotation(MathUtils.radiansToDegrees * player.body.getAngle());
-        player.sprite[player.condition].draw(batch);
+
+        if(player.exist) {
+            player.sprite[player.condition].setBounds(player.body.getPosition().x - player.sprite[player.condition].getWidth() / (2), player.body.getPosition().y - player.sprite[player.condition].getHeight() / (2), 2 * (player.width / PPM), 2 * (player.height / PPM));
+            player.sprite[player.condition].setOrigin(player.sprite[player.condition].getWidth() / 2, player.sprite[player.condition].getHeight() / 2);
+            player.sprite[player.condition].setRotation(MathUtils.radiansToDegrees * player.body.getAngle());
+            player.sprite[player.condition].draw(batch);
+            if(!pausePhysics && !player.SoundDone)
+            {
+                player.Sound.play();
+                player.SoundDone = true;
+            }
+        }
+
+
+        launcher.arm.draw(batch);
+
+        if ( Gdx.input.getPressure() == 1 && pausePhysics && includes((Bird) player , new Vector2(Gdx.input.getX()/2,(Gdx.graphics.getHeight() - Gdx.input.getY()) /2 )))
+        {
+            hold = true;
+            if (mouseOrigin == null)
+                mouseOrigin = new Vector2(Gdx.input.getX() ,Gdx.graphics.getHeight() -  Gdx.input.getY());
+        }
+        if (hold && pausePhysics)
+        {
+            if(!launcher.strechPlayed) {
+                launcher.stretchSound.play();
+                launcher.strechPlayed = true;
+            }
+            getMouseInput();
+            launcher.body.setPosition(37/PPM,27/PPM);
+            launcher.body.draw(batch);
+
+            launcher.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            launcher.shapeRenderer.setColor(0.2f, 0f, 0f, 1f);
+            launcher.shapeRenderer.rectLine(60/PPM, 75/PPM, GameScreen.player.body.getPosition().x, GameScreen.player.body.getPosition().y, 5/PPM);
+            launcher.shapeRenderer.end();
+            launcher.shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+
+            if(player.exist) {
+                player.sprite[player.condition].setBounds(player.body.getPosition().x - player.sprite[player.condition].getWidth() / (2), player.body.getPosition().y - player.sprite[player.condition].getHeight() / (2), 2 * (player.width / PPM), 2 * (player.height / PPM));
+                player.sprite[player.condition].setOrigin(player.sprite[player.condition].getWidth() / 2, player.sprite[player.condition].getHeight() / 2);
+                player.sprite[player.condition].setRotation(MathUtils.radiansToDegrees * player.body.getAngle());
+                player.sprite[player.condition].draw(batch);
+            }
+
+            launcher.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            launcher.shapeRenderer.setColor(0.2f, 0f, 0f, 1f);
+            launcher.shapeRenderer.rectLine(45/PPM, 75/PPM, GameScreen.player.body.getPosition().x, GameScreen.player.body.getPosition().y, 5/PPM);
+            launcher.shapeRenderer.end();
+            launcher.shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+            launcher.arm.draw(batch);
+        }
 
 
         player.Special_ability();
@@ -138,8 +196,10 @@ public class GameScreen implements Screen {
         }
         player.Condition();
 
+
         checkExist();
         batch.end();
+
         //dDebugRenderer.render(world,camera.combined);
     }
 
@@ -227,6 +287,7 @@ public class GameScreen implements Screen {
             {
                 world.destroyBody(levelObjects[i].body);
                 levelObjects[i].destroyed = true;
+                levelObjects[i].Destroy.play();
             }
         }
         for ( int i = 0 ; i < NumOfPigs ; i++) {
@@ -234,7 +295,17 @@ public class GameScreen implements Screen {
             {
                 world.destroyBody(enemies[i].body);
                 enemies[i].destroyed = true;
+                enemies[i].Destroy.play();
             }
+        }
+
+        if (player.exist == false && player.destroyed == false)
+        {
+            world.destroyBody(player.body);
+            player.destroyed = true;
+            GameScreen.player_exists = false;
+            player.Destroy.play();
+            launcher.strechPlayed = false;
         }
     }
 
@@ -271,4 +342,5 @@ public class GameScreen implements Screen {
             }
         }
     }
+
 }
