@@ -2,6 +2,7 @@ package com.angrybirds.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -25,6 +26,7 @@ public class ThemeScreen implements Screen {
     BitmapFont font;
     Skin skin;
     TextureAtlas buttonAtlas;
+    static Music ThemeMusic;
 
     public ThemeScreen(Project_Entery PE)
     {
@@ -34,6 +36,7 @@ public class ThemeScreen implements Screen {
     @Override
     public void show() {
         MainMenu.mainMusic.stop();
+        ThemeMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/ThemesSong.mp3"));
         this.WP = new Texture("Themes.png");
         this.Wallpaper = new Sprite(WP);
         stage = new Stage();
@@ -54,6 +57,7 @@ public class ThemeScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 MainMenu.ThemeName = "Spurs";
+                ThemeMusic.stop();
                 hide();
                 PE.setScreen(new MainMenu(PE));
 
@@ -67,6 +71,7 @@ public class ThemeScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 MainMenu.ThemeName = "StarWars";
+                ThemeMusic.stop();
                 hide();
                 PE.setScreen(new MainMenu(PE));
             }
@@ -79,6 +84,7 @@ public class ThemeScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 MainMenu.ThemeName = "Avengers";
+                ThemeMusic.stop();
                 hide();
                 PE.setScreen(new MainMenu(PE));
             }
@@ -91,6 +97,7 @@ public class ThemeScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 MainMenu.ThemeName = "Normal";
+                ThemeMusic.stop();
                 hide();
                 PE.setScreen(new MainMenu(PE));
             }
@@ -103,6 +110,7 @@ public class ThemeScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 MainMenu.ThemeName = "Space";
+                ThemeMusic.stop();
                 hide();
                 PE.setScreen(new MainMenu(PE));
             }
@@ -115,6 +123,7 @@ public class ThemeScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        ThemeMusic.play();
         stage.act(delta);
         stage.getBatch().begin();
         stage.getBatch().draw(Wallpaper,0,0);
