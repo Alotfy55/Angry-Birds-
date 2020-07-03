@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SplashScreen1 implements Screen {
 
+
     Project_Entery PE;
     private Texture Splash;
     private Sprite Logo;
@@ -23,7 +24,7 @@ public class SplashScreen1 implements Screen {
     }
     @Override
     public void show() {
-        this.Splash = new Texture("Logo.jpg");
+        this.Splash = new Texture("core/assets/Logo.jpg");
         this.Logo = new Sprite(this.Splash);
         Logo.setColor(1,1,1,0);
 

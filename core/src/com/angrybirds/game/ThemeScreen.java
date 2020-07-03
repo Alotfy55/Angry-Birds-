@@ -36,16 +36,16 @@ public class ThemeScreen implements Screen {
     @Override
     public void show() {
         MainMenu.mainMusic.stop();
-        ThemeMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/ThemesSong.mp3"));
-        this.WP = new Texture("Themes.png");
+        ThemeMusic = Gdx.audio.newMusic(Gdx.files.internal("core/assets/Sound/ThemesSong.mp3"));
+        this.WP = new Texture("core/assets/Themes.png");
         this.Wallpaper = new Sprite(WP);
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
         button = new TextButton[5];
-        font = new BitmapFont(Gdx.files.internal("font/font34.fnt"), false);
+        font = new BitmapFont(Gdx.files.internal("core/assets/font/font34.fnt"), false);
         skin = new Skin();
-        buttonAtlas = new TextureAtlas(Gdx.files.internal("Button/Button.atlas"));
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/Button/Button.atlas"));
         skin.addRegions(buttonAtlas);
         textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = font;
@@ -56,6 +56,7 @@ public class ThemeScreen implements Screen {
         button[0].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+
                 MainMenu.ThemeName = "Spurs";
                 ThemeMusic.stop();
                 hide();
@@ -70,6 +71,7 @@ public class ThemeScreen implements Screen {
         button[1].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+
                 MainMenu.ThemeName = "StarWars";
                 ThemeMusic.stop();
                 hide();
@@ -83,6 +85,7 @@ public class ThemeScreen implements Screen {
         button[2].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+
                 MainMenu.ThemeName = "Avengers";
                 ThemeMusic.stop();
                 hide();
@@ -96,6 +99,7 @@ public class ThemeScreen implements Screen {
         button[3].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+
                 MainMenu.ThemeName = "Normal";
                 ThemeMusic.stop();
                 hide();
@@ -123,6 +127,7 @@ public class ThemeScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         ThemeMusic.play();
         stage.act(delta);
         stage.getBatch().begin();

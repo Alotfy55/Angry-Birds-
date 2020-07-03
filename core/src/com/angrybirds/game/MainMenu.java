@@ -32,6 +32,7 @@ public class MainMenu implements Screen {
     static Music mainMusic;
     static boolean playedMusic = false;
 
+
     public MainMenu(Project_Entery PE)
     {
         this.PE = PE;
@@ -40,17 +41,17 @@ public class MainMenu implements Screen {
     @Override
     public void show() {
         set = false;
-        mainMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/song.mp3"));
-        this.WP = new Texture("MenuWP.jpg");
+        mainMusic = Gdx.audio.newMusic(Gdx.files.internal("core/assets/Sound/song.mp3"));
+        this.WP = new Texture("core/assets/MenuWP.jpg");
         this.Wallpaper = new Sprite(WP);
         Wallpaper.setPosition(-50,-280);
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
         button = new TextButton[4];
-        font = new BitmapFont(Gdx.files.internal("font/font40.fnt"), false);
+        font = new BitmapFont(Gdx.files.internal("core/assets/font/font40.fnt"), false);
         skin = new Skin();
-        buttonAtlas = new TextureAtlas(Gdx.files.internal("Button/Button.atlas"));
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/Button/Button.atlas"));
         skin.addRegions(buttonAtlas);
         textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = font;
@@ -78,8 +79,14 @@ public class MainMenu implements Screen {
             }
         });
         stage.addActor(button[1]);
-        button[2] = new TextButton("Scores", textButtonStyle);
+        button[2] = new TextButton("Credits", textButtonStyle);
         button[2].setBounds(200,160,300,200);
+        button[2].addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                PE.setScreen(new CreditsScreen(PE));
+            }
+        });
         stage.addActor(button[2]);
         button[3] = new TextButton("Exit", textButtonStyle);
         button[3].setBounds(200,40,300,200);

@@ -1,6 +1,8 @@
 package com.angrybirds.game;
 
-import Themes.Theme;
+import com.angrybirds.Everything.*;
+import com.angrybirds.Themes.Theme;
+import com.angrybirds.action_Listener.ListenerClass;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -8,18 +10,36 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class GameScreen implements Screen {
 
     SpriteBatch batch;
+
+    Stage stage;
+    TextButton button;
+    TextButton.TextButtonStyle textButtonStyle;
+    TextureAtlas buttonAtlas;
+    ImageButton Restart;
+    ImageButton Exit;
+    ImageButton.ImageButtonStyle imageButtonStyle;
+    BitmapFont font;
+    Skin skin;
 
     Texture img;
     Texture background;
@@ -29,31 +49,35 @@ public class GameScreen implements Screen {
     Box2DDebugRenderer dDebugRenderer;
     OrthographicCamera camera;
 
+    public int Score;
+    public static int numOfBirds;
     public static Theme theme;
-    static int NumOfObjects;
-    static int NumOfPigs , layoutWidth , layoutHeight[];
-    static Everything player, levelObjects[], enemies[] ,bedRock;
+    public static int NumOfObjects;
+    public static int NumOfPigs;
+    static int layoutWidth;
+    static int layoutHeight[];
+    public static Everything player;
+    public static Everything[] levelObjects;
+    public static Everything[] enemies;
+    public static Everything bedRock;
     static Bird_Launcher launcher;
-    static boolean player_exists;
+    public static boolean player_exists;
+    public static String ThemeName;
 
-    public Music GameMusic;
-
-
+    public static Music GameMusic;
 
     Project_Entery PE;
-    static boolean pausePhysics;
+    public static boolean pausePhysics;
     static boolean hold;
     public static final float PPM = 32;
     public Vector2 mouseOrigin;
-    final int MouseLimit = 50;
     ListenerClass lis;
-
-
+    private int ScoreNum;
 
     public GameScreen(Project_Entery PE, String Name) {
         this.PE = PE;
+        ThemeName = Name;
         theme = new Theme(Name);
-
     }
 
     @Override
@@ -62,25 +86,72 @@ public class GameScreen implements Screen {
         GameMusic = theme.GameMusic;
         MainMenu.set = true;
 
+        stage = new Stage();
+
+        font = new BitmapFont(Gdx.files.internal("core/assets/font/font30.fnt"), false);
+        textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.font = font;
+        button = new TextButton("Score : "+ Score, textButtonStyle);
+        button.setBounds(50,590,100,200);
+        stage.addActor(button);
+
+        skin = new Skin();
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/Button/GameButton.atlas"));
+        skin.addRegions(buttonAtlas);
+        imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.up = skin.getDrawable("GameButton");
+        imageButtonStyle.down = skin.getDrawable("GameButtonPressed");
+        Restart = new ImageButton(imageButtonStyle);
+        Restart.setBounds(1140,660,50,50);
+        Restart.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                GameMusic.stop();
+                PE.setScreen(new GameScreen(PE,ThemeName));
+            }
+        });
+        stage.addActor(Restart);
+
+        skin = new Skin();
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/Button/ExitButton.atlas"));
+        skin.addRegions(buttonAtlas);
+        imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.up = skin.getDrawable("ExitButton");
+        imageButtonStyle.down = skin.getDrawable("ExitButtonPressed");
+        Exit = new ImageButton(imageButtonStyle);
+        Exit.setBounds(1200,660,50,50);
+        Exit.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+
+                GameMusic.stop();
+                PE.setScreen(new MainMenu(PE));
+            }
+        });
+        stage.addActor(Exit);
+
+        Gdx.input.setInputProcessor(stage);
+
+
         Box2D.init();
-        world = new World(new Vector2(0, -10), false);
         lis = new ListenerClass();
-        world.setContactListener(lis);
         dDebugRenderer = new Box2DDebugRenderer();
         camera = new OrthographicCamera(20,10);
         pausePhysics = true;
         hold = false;
         NumOfObjects = 0;
         NumOfPigs = 0;
+        numOfBirds = 1;
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         background = theme.Background;
         BG = new Sprite(background);
 
+        world = new World(new Vector2(0, -10), false);
+        world.setContactListener(lis);
         createLevel();
         player = new Yellow_Bird(world, 50, 78, 10, 10, false);
-
-        bedRock = new Obstacle( world ,Gdx.graphics.getWidth() / 2, 27, 1000, 1, true);
+        bedRock = new Obstacle( world ,Gdx.graphics.getWidth() / 2, 27, 10000, 1, true);
         launcher = new Bird_Launcher();
     }
 
@@ -89,20 +160,30 @@ public class GameScreen implements Screen {
 
         GameMusic.play();
 
+
         if (pausePhysics)
             player.body.setAwake(false);
         else
             player.body.setAwake(true);
+
         world.step(1 / 60f, 6, 2);
+
         batch.setProjectionMatrix(camera.combined);
 
         Gdx.gl.glClearColor(135, 206, 236, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        if(player.condition > 0)
+        {
+            player.Time_counter++;
+        }
+        if(player.Time_counter > 240)
+        {
+            player.health = 0;
+        }
 
 
         batch.begin();
-
 
 
         batch.draw(BG, 0,0,20,11.25f);
@@ -196,10 +277,22 @@ public class GameScreen implements Screen {
         }
         player.Condition();
 
-
         checkExist();
+
+        if(CheckEndGame())
+        {
+
+            ScoreNum = NumOfPigs-numOfBirds;
+            this.PE.setScreen(new EndGameScreen(PE,this.theme,this.Score,this.ScoreNum));
+        }
+
         batch.end();
 
+        stage.act(delta);
+        button.setText("Score : "+ Score);
+        stage.draw();
+
+        CheckRevive();
         //dDebugRenderer.render(world,camera.combined);
     }
 
@@ -272,7 +365,7 @@ public class GameScreen implements Screen {
 
     }
 
-    public boolean includes(Bird player,Vector2 mousePoint ) {
+    public boolean includes(Bird player, Vector2 mousePoint ) {
         if (mousePoint.x > player.body.getPosition().x*PPM - (player.width) && mousePoint.x < player.body.getPosition().x*PPM + (player.width) &&
                 mousePoint.y > player.body.getPosition().y*PPM - (player.height)  && mousePoint.y < player.body.getPosition().y*PPM + (player.height))
             return true;
@@ -288,6 +381,8 @@ public class GameScreen implements Screen {
                 world.destroyBody(levelObjects[i].body);
                 levelObjects[i].destroyed = true;
                 levelObjects[i].Destroy.play();
+                Score += 3003;
+
             }
         }
         for ( int i = 0 ; i < NumOfPigs ; i++) {
@@ -296,6 +391,7 @@ public class GameScreen implements Screen {
                 world.destroyBody(enemies[i].body);
                 enemies[i].destroyed = true;
                 enemies[i].Destroy.play();
+                Score += 10000;
             }
         }
 
@@ -342,5 +438,41 @@ public class GameScreen implements Screen {
             }
         }
     }
+
+    public void CheckRevive()
+    {
+        if(player.destroyed == true)
+        {
+            int num = (int) ((Math.random() * 10) % 2) ;
+            if (num == 1)
+            {
+                player = new Yellow_Bird(world, 50, 78, 10, 10, false);
+            }
+            else
+            {
+                player = new Bird(world, 50, 78, 10, 10, false);
+            }
+
+            numOfBirds ++;
+            Score = (Score/numOfBirds);
+            pausePhysics = true;
+        }
+    }
+
+    public boolean CheckEndGame()
+    {
+        for ( int i = 0 ; i < NumOfPigs ; i++) {
+            if(enemies[i].destroyed == false)
+            {
+                return false;
+            }
+        }
+        if(player.destroyed)
+            return true;
+        else
+            return false;
+    }
+
+
 
 }

@@ -24,7 +24,7 @@ public class SplashScreen2 implements Screen {
 
     @Override
     public void show() {
-        this.Splash = new Texture("Built with.jpg");
+        this.Splash = new Texture("core/assets/Built with.jpg");
         this.Powered = new Sprite(this.Splash);
         Powered.setColor(1,1,1,0);
 
