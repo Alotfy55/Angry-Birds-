@@ -23,11 +23,12 @@ public class CreditsScreen implements Screen {
     private Texture WP;
     private Sprite Wallpaper;
     BitmapFont font;
+    BitmapFont font2;
     int timer;
-    int x;
-    int y;
+    float x;
+    float y;
     int PicTimer;
-    int TeamNameY;
+    float TeamNameY;
 
     Person[] Team;
 
@@ -61,6 +62,7 @@ public class CreditsScreen implements Screen {
         Team[4] = new Person("core/assets/Team/Moamen.png",100,-1800,"Moamen Mohammad");
         Team[5] = new Person("core/assets/Team/Seif.png",100,-2200,"Seif Emad");
         font = new BitmapFont(Gdx.files.internal("core/assets/font/font80.fnt"), false);
+        font2 = new BitmapFont(Gdx.files.internal("core/assets/font/font60.fnt"), false);
         TeamNameY = -2900;
 
         skin = new Skin();
@@ -97,24 +99,24 @@ public class CreditsScreen implements Screen {
         System.out.println(timer);
         if (timer > 180)
         {
-            y ++;
+            y += 1f;
             for(int i = 0 ; i < 6 ; i++)
             {
-                Team[i].pos.y++;
+                Team[i].pos.y += 1f;
             }
-            TeamNameY++;
+            TeamNameY += 1f;
         }
 
         for(int i = 0 ; i < 6 ; i++) {
             stage.getBatch().draw(Team[i].Picture,Team[i].pos.x,Team[i].pos.y,200,200);
-            font.draw(stage.getBatch(),Team[i].Name,Team[i].pos.x + 240,Team[i].pos.y+120);
+            font2.draw(stage.getBatch(),Team[i].Name,Team[i].pos.x + 240,Team[i].pos.y+120);
         }
 
-        if(TeamNameY > 550)
+        if(TeamNameY > 450)
         {
-            TeamNameY = 550;
+            TeamNameY = 450;
             PicTimer++;
-            if(PicTimer >= 180)
+            if(PicTimer >= 350)
             {
                 this.Song.stop();
                 this.PE.setScreen(new MainMenu(PE));
@@ -152,6 +154,7 @@ public class CreditsScreen implements Screen {
     @Override
     public void dispose() {
         font.dispose();
+        font2.dispose();
         for(int i = 0 ; i < 6 ; i++)
         {
             Team[i].pic.dispose();

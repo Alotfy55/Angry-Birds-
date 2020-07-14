@@ -11,8 +11,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.height=720;
 		config.width=1280;
-		config.addIcon("Icon.png", Files.FileType.Internal);
+		config.addIcon("core/assets/Icon.png", Files.FileType.Internal);
 		new LwjglApplication(new Project_Entery(), config);
-
 	}
 }
