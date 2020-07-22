@@ -281,7 +281,6 @@ public class GameScreen implements Screen {
 
         if(CheckEndGame())
         {
-
             ScoreNum = NumOfPigs-numOfBirds;
             this.PE.setScreen(new EndGameScreen(PE,this.theme,this.Score,this.ScoreNum));
         }

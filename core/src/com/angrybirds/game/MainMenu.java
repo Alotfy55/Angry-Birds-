@@ -49,7 +49,9 @@ public class MainMenu implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         button = new TextButton[4];
+
         font = new BitmapFont(Gdx.files.internal("core/assets/font/font40.fnt"), false);
+
         skin = new Skin();
         buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/Button/Button.atlas"));
         skin.addRegions(buttonAtlas);
