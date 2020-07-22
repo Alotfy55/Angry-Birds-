@@ -56,7 +56,6 @@ public class Bird extends Everything {
 				
 				def.angularDamping = 3f;
 
-
 				pBody = world.createBody(def);
 				FixtureDef fixtureDef = new FixtureDef();
 				CircleShape shape = new CircleShape();
