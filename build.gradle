@@ -58,6 +58,6 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        compile fileTree(dir:'C:/Users/oddal/Documents/GitHub/Angry-Birds-/libs', include: 'tween-engine-api.jar')
+        compile fileTree(dir:'../libs', include: 'tween-engine-api.jar')
     }
 }
